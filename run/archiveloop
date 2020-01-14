@@ -499,30 +499,32 @@ fi
 
 mount_and_fix_errors_in_files
 
-if archive_is_reachable
-then
-  fastblink
+#if archive_is_reachable#
+#then
+#  fastblink
 
-  set_time
+#  set_time
 
-  archive_clips
+#  archive_clips
 
-  doubleblink
+#  doubleblink
 
-  connect_usb_drives_to_host
+#  connect_usb_drives_to_host
 
-  wait_for_archive_to_be_unreachable
-else
-  slowblink
+#  wait_for_archive_to_be_unreachable
+#else
+#  slowblink
 
-  connect_usb_drives_to_host
-fi
+#  connect_usb_drives_to_host
+#fi
+
+connect_usb_drives_to_host
 
 while true
 do
   slowblink
 
-  wait_for_archive_to_be_reachable
+  #wait_for_archive_to_be_reachable
 
   fastblink
 
@@ -536,19 +538,24 @@ do
     /root/bin/make_snapshot.sh
   fi
 
-  disconnect_usb_drives_from_host
+  #disconnect_usb_drives_from_host
 
   mount_and_fix_errors_in_files
 
   archive_clips
+  
+  mount_and_fix_errors_in_files
 
   truncate_log
 
   doubleblink
 
-  connect_usb_drives_to_host
-
-  wait_for_archive_to_be_unreachable
+  #connect_usb_drives_to_host
+  
+  log "Waiting 1 minute"
+  sleep 1m
+  
+  #wait_for_archive_to_be_unreachable
 
   check_if_usb_gadget_is_mounted
 done
