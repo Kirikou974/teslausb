@@ -532,7 +532,6 @@ export -f log
 
 echo "==============================================" >> "$LOG_FILE"
 log "Starting archiveloop..."
-/root/bin/remountfs_rw
 mount_all_snapshots
 
 if [ "${SNAPSHOTS_ENABLED:-true}" = "true" ]
@@ -588,6 +587,7 @@ do
   
   ensure_cam_file_is_mounted
   
+  /root/bin/remountfs_rw
   move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SavedClips"
   move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SentryClips"
   
