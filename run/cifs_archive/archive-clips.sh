@@ -76,10 +76,10 @@ function moveclips() {
 connectionmonitor $$ &
 
 # new file name pattern, firmware 2019.*
-moveclips "$CAM_MOUNT/TeslaCam/SavedClips"
+moveclips "/tmp/TeslaCam/SavedClips"
 
 # v10 firmware adds a SentryClips folder
-moveclips "$CAM_MOUNT/TeslaCam/SentryClips"
+moveclips "/tmp/TeslaCam/SentryClips"
 
 kill %1
 
