@@ -70,7 +70,7 @@ function moveclips() {
     else
       log "$SUB/$file_name not found"
     fi
-  done < <( find "$ROOT" -type f -printf "%P\0" )
+  done < <( find "$ROOT" -printf "%P\0" )
 }
 
 connectionmonitor $$ &
