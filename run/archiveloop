@@ -589,6 +589,7 @@ do
   /root/bin/remountfs_rw
   move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SavedClips"
   move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SentryClips"
+  rmdir --ignore-fail-on-non-empty "$CAM_MOUNT/TeslaCam/SavedClips"/* "$CAM_MOUNT/TeslaCam/SentryClips"/* || true
   
   unmount_cam_file  
   
