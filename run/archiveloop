@@ -381,7 +381,7 @@ function move_clips_to_tmp() {
     else
       log "$SUB/$file_name not found in tmp"
     fi
-  done < <( find "$ROOT" -type f -printf "%P\0" )
+  done < <( find "$ROOT" -printf "%P\0" )
 }
 
 function archive_clips () {
