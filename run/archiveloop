@@ -283,8 +283,8 @@ function disconnect_usb_drives_from_host () {
 function archive_teslacam_clips () {
     log "Checking saved folder count..."
 
-    DIR_COUNT=$(cd "$CAM_MOUNT"/TeslaCam && find . -maxdepth 2 -path './SavedClips/*' -type d -o -path './SentryClips/*' -type d | wc -l)
-    FILE_COUNT=$(cd "$CAM_MOUNT"/TeslaCam && find . -maxdepth 3 -path './SavedClips/*' -type f -o -path './SentryClips/*' -type f | wc -l)
+    DIR_COUNT=$(cd /tmp/TeslaCam && find . -maxdepth 2 -path './SavedClips/*' -type d -o -path './SentryClips/*' -type d | wc -l)
+    FILE_COUNT=$(cd /tmp/TeslaCam && find . -maxdepth 3 -path './SavedClips/*' -type f -o -path './SentryClips/*' -type f | wc -l)
   
     log "There are $DIR_COUNT event folder(s) with $FILE_COUNT file(s) to move."
   
