@@ -350,6 +350,7 @@ function move_clips_to_tmp() {
 
   while IFS= read -r -d '' file_name
   do
+    log "File name : '$ROOT/$file_name'"
     if [ -d "$ROOT/$file_name" ]
     then
       log "Creating output directory '$SUB/$file_name' in tmp"
@@ -373,6 +374,7 @@ function move_clips_to_tmp() {
         then
           log "Moved '$SUB/$file_name' to tmp"
           NUM_FILES_MOVED=$((NUM_FILES_MOVED + 1))
+	  log "_________________"
         else
           log "Failed to move '$SUB/$file_name' to tmp"
           NUM_FILES_FAILED=$((NUM_FILES_FAILED + 1))
@@ -381,6 +383,7 @@ function move_clips_to_tmp() {
     else
       log "$SUB/$file_name not found in tmp"
     fi
+    log "Next file"
   done < <( find "$ROOT" -printf "%P\0" )
 }
 
