@@ -335,11 +335,11 @@ function copy_music_files () {
   unmount_music_file
 }
 
-function move_clips_to_tmp() {
+function copy_clips_to_tmp() {
   ROOT="$1"
   SUB=$(basename "$ROOT")
 
-  log "Moving '$ROOT' to tmp folder"
+  log "Copying '$ROOT' to tmp folder"
 	
   if [ ! -d "$ROOT" ]
   then
@@ -363,13 +363,13 @@ function move_clips_to_tmp() {
       if [ "$size" -lt 100000 ]
       then
         log "'$SUB/$file_name' is only $size bytes"
-        rm "$ROOT/$file_name"
+        #rm "$ROOT/$file_name"
       else
         log "Moving '$SUB/$file_name' to tmp"
         outdir=$(dirname "$file_name")
-        if mv -f "$ROOT/$file_name" "/tmp/TeslaCam/$SUB/$outdir"
+        if cp -f "$ROOT/$file_name" "/tmp/TeslaCam/$SUB/$outdir"
         then
-          log "Moved '$SUB/$file_name' to tmp"
+          log "Copied '$SUB/$file_name' to tmp"
         else
           log "Failed to move '$SUB/$file_name' to tmp"
         fi
@@ -577,21 +577,22 @@ do
     /root/bin/make_snapshot.sh
   fi
 
-  disconnect_usb_drives_from_host
-
   mount_and_fix_errors_in_files
   
   ensure_cam_file_is_mounted
   
   /root/bin/remountfs_rw
-  move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SavedClips"
-  move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SentryClips"
+  copy_clips_to_tmp "$CAM_MOUNT/TeslaCam/SavedClips"
+  copy_clips_to_tmp "$CAM_MOUNT/TeslaCam/SentryClips"
+  
+  disconnect_usb_drives_from_host
+
   rmdir --ignore-fail-on-non-empty "$CAM_MOUNT/TeslaCam/SavedClips"/* "$CAM_MOUNT/TeslaCam/SentryClips"/* || true
   trim_free_space "$CAM_MOUNT"
   
-  unmount_cam_file  
-  
   connect_usb_drives_to_host
+
+  unmount_cam_file
   
   archive_clips
   
