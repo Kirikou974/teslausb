@@ -320,7 +320,6 @@ function archive_teslacam_clips () {
     fi
 
     # Trim the camera archive to reduce the number of blocks in the snapshot.
-    trim_free_space "$CAM_MOUNT"
 }
 
 function copy_music_files () {
@@ -350,7 +349,6 @@ function move_clips_to_tmp() {
 
   while IFS= read -r -d '' file_name
   do
-    log "File name : '$ROOT/$file_name'"
     if [ -d "$ROOT/$file_name" ]
     then
       log "Creating output directory '$SUB/$file_name' in tmp"
@@ -379,7 +377,6 @@ function move_clips_to_tmp() {
     else
       log "$SUB/$file_name not found in tmp"
     fi
-    log "Next file"
   done < <( find "$ROOT" -printf "%P\0" )
 }
 
@@ -590,6 +587,7 @@ do
   move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SavedClips"
   move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SentryClips"
   rmdir --ignore-fail-on-non-empty "$CAM_MOUNT/TeslaCam/SavedClips"/* "$CAM_MOUNT/TeslaCam/SentryClips"/* || true
+  trim_free_space "$CAM_MOUNT"
   
   unmount_cam_file  
   
