@@ -354,7 +354,7 @@ function move_clips_to_tmp() {
     if [ -d "$ROOT/$file_name" ]
     then
       log "Creating output directory '$SUB/$file_name' in tmp"
-      if ! mkdir -p "/tmp/$SUB/$file_name"
+      if ! mkdir -p "/tmp/TeslaCam/$SUB/$file_name"
       then
         log "Failed to create '$SUB/$file_name' in tmp"
         return
@@ -369,7 +369,7 @@ function move_clips_to_tmp() {
       else
         log "Moving '$SUB/$file_name' to tmp"
         outdir=$(dirname "$file_name")
-        if mv -f "$ROOT/$file_name" "/tmp/$SUB/$outdir"
+        if mv -f "$ROOT/$file_name" "/tmp/TeslaCam/$SUB/$outdir"
         then
           log "Moved '$SUB/$file_name' to tmp"
         else
