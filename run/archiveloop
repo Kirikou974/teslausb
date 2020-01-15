@@ -283,8 +283,6 @@ function disconnect_usb_drives_from_host () {
 function archive_teslacam_clips () {
     log "Checking saved folder count..."
 
-    ensure_cam_file_is_mounted
-  
     DIR_COUNT=$(cd "$CAM_MOUNT"/TeslaCam && find . -maxdepth 2 -path './SavedClips/*' -type d -o -path './SentryClips/*' -type d | wc -l)
     FILE_COUNT=$(cd "$CAM_MOUNT"/TeslaCam && find . -maxdepth 3 -path './SavedClips/*' -type f -o -path './SentryClips/*' -type f | wc -l)
   
@@ -323,8 +321,6 @@ function archive_teslacam_clips () {
 
     # Trim the camera archive to reduce the number of blocks in the snapshot.
     trim_free_space "$CAM_MOUNT"
-
-    unmount_cam_file
 }
 
 function copy_music_files () {
@@ -589,9 +585,13 @@ do
   disconnect_usb_drives_from_host
 
   mount_and_fix_errors_in_files
-
+  
+  ensure_cam_file_is_mounted
+  
   move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SavedClips"
   move_clips_to_tmp "$CAM_MOUNT/TeslaCam/SentryClips"
+  
+  unmount_cam_file  
   
   connect_usb_drives_to_host
   
