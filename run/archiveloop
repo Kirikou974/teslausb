@@ -582,12 +582,18 @@ do
   ensure_cam_file_is_mounted
   
   /root/bin/remountfs_rw
-  copy_clips_to_tmp "$CAM_MOUNT/TeslaCam/SavedClips"
-  copy_clips_to_tmp "$CAM_MOUNT/TeslaCam/SentryClips"
+  log "Copying clips to tmp"
+  rsync -avP --exclude "RecentClips" "$CAM_MOUNT/TeslaCam" "/tmp"
+  log "Copied clips to tmp"
   
   disconnect_usb_drives_from_host
-
-  rmdir --ignore-fail-on-non-empty "$CAM_MOUNT/TeslaCam/SavedClips"/* "$CAM_MOUNT/TeslaCam/SentryClips"/* || true
+  
+  log "Removing files from drive"
+  rmdir $CAM_MOUNT/TeslaCam/SavedClips
+  rm -r "$CAM_MOUNT/TeslaCam/SavedClips"/*
+  rm -r "$CAM_MOUNT/TeslaCam/SentryClips"/*
+  log "Removed files from drive"
+  
   trim_free_space "$CAM_MOUNT"
   
   connect_usb_drives_to_host
