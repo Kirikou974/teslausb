@@ -589,7 +589,6 @@ do
   disconnect_usb_drives_from_host
   
   log "Removing files from drive"
-  rmdir $CAM_MOUNT/TeslaCam/SavedClips
   rm -r "$CAM_MOUNT/TeslaCam/SavedClips"/*
   rm -r "$CAM_MOUNT/TeslaCam/SentryClips"/*
   log "Removed files from drive"
