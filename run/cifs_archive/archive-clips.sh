@@ -84,7 +84,8 @@ moveclips "/tmp/TeslaCam/SentryClips"
 kill %1
 
 # delete empty directories under SavedClips and SentryClips
-rmdir --ignore-fail-on-non-empty "/tmp/TeslaCam/SavedClips"/* "/tmp/TeslaCam/SentryClips"/* || true
+rm -r /tmp/TeslaCam/SavedClips/* 
+rm -r /tmp/TeslaCam/SentryClips/*
 
 log "Moved $NUM_FILES_MOVED file(s), failed to copy $NUM_FILES_FAILED, deleted $NUM_FILES_DELETED."
 
