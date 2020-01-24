@@ -519,6 +519,17 @@ function snapshotloop {
   done
 }
 
+function set_system_to_rw {
+  log "Switching system to read write"
+  /root/bin/remountfs_rw
+}
+
+function get_folder_stats {
+  log "Fetching folders stats"
+  
+}
+  
+
 export ARCHIVE_HOST_NAME
 export -f mount_mountpoint
 export -f ensure_mountpoint_is_mounted
@@ -537,39 +548,12 @@ then
 fi
 
 mount_and_fix_errors_in_files
-
-#if archive_is_reachable#
-#then
-#  fastblink
-
-#  set_time
-
-#  archive_clips
-
-#  doubleblink
-
-#  connect_usb_drives_to_host
-
-#  wait_for_archive_to_be_unreachable
-#else
-#  slowblink
-
-#  connect_usb_drives_to_host
-#fi
-
 connect_usb_drives_to_host
 
 while true
 do
   slowblink
-
-  #wait_for_archive_to_be_reachable
-
-  fastblink
-
   set_time
-
-  sleep "${ARCHIVE_DELAY:-20}"
 
   if [ "${SNAPSHOTS_ENABLED:-true}" = "true" ]
   then
@@ -578,10 +562,12 @@ do
   fi
 
   mount_and_fix_errors_in_files
-  
   ensure_cam_file_is_mounted
   
-  /root/bin/remountfs_rw
+  set_system_to_rw
+  
+  get_folder_stats
+  
   log "Copying clips to tmp"
   rsync -avP --exclude "RecentClips" "$CAM_MOUNT/TeslaCam" "/tmp"
   log "Copied clips to tmp"
@@ -599,6 +585,7 @@ do
 
   unmount_cam_file
   
+  sleep "${ARCHIVE_DELAY:-20}"
   archive_clips
   
   truncate_log
@@ -608,7 +595,5 @@ do
   log "Waiting 1 minute"
   sleep 1m
   
-  #wait_for_archive_to_be_unreachable
-
   check_if_usb_gadget_is_mounted
 done
