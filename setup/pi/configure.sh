@@ -137,13 +137,15 @@ function install_website() {
     local install_path="$1"
     local node_version="$2" #11.15.0
     local node_architecture="$3" #armv6l
-    log "Donwloading and installation NodeJS version $node_version for $node_architecture"
+    log_progress "Donwloading and installation NodeJS version $node_version for $node_architecture"
     curl -o node-v$node_version-linux-$node_architecture.tar.gz https://nodejs.org/dist/latest-v11.x/node-v$node_version-linux-$node_architecture.tar.gz
     tar -xzf node-v$node_version-linux-$node_architecture.tar.gz
     sudo cp -r node-v$node_version$-linux-$node_architecture/* /usr/local/
 
+    log_progress "NodeJS installed"
     node -v
     npm -v
+    log_progress "Done installing website"
 }
 
 function install_archive_scripts () {
