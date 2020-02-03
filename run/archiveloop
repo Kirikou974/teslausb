@@ -523,13 +523,7 @@ function set_system_to_rw {
   log "Switching system to read write"
   /root/bin/remountfs_rw
 }
-
-function get_folder_stats {
-  log "Fetching folders stats"
   
-}
-  
-
 export ARCHIVE_HOST_NAME
 export -f mount_mountpoint
 export -f ensure_mountpoint_is_mounted
@@ -561,39 +555,39 @@ do
     /root/bin/make_snapshot.sh
   fi
 
+  #mount and copy 
   mount_and_fix_errors_in_files
   ensure_cam_file_is_mounted
   
   set_system_to_rw
   
-  get_folder_stats
-  
   log "Copying clips to tmp"
   rsync -avP --exclude "RecentClips" "$CAM_MOUNT/TeslaCam" "/tmp"
   log "Copied clips to tmp"
   
-  disconnect_usb_drives_from_host
-  
-  log "Removing files from drive"
-  rm -rf "$CAM_MOUNT/TeslaCam/SavedClips"/*
-  rm -rf "$CAM_MOUNT/TeslaCam/SentryClips"/*
-  log "Removed files from drive"
-  
-  trim_free_space "$CAM_MOUNT"
-  
-  connect_usb_drives_to_host
-
   unmount_cam_file
-  
-  sleep "${ARCHIVE_DELAY:-20}"
-  archive_clips
-  
   truncate_log
+
+  #disconnect_usb_drives_from_host
+  
+  #log "Removing files from drive"
+  #rm -rf "$CAM_MOUNT/TeslaCam/SavedClips"/*
+  #rm -rf "$CAM_MOUNT/TeslaCam/SentryClips"/*
+  #log "Removed files from drive"
+  
+  #trim_free_space "$CAM_MOUNT"
+  
+  #connect_usb_drives_to_host
+
+  
+  #sleep "${ARCHIVE_DELAY:-20}"
+  #archive_clips
+  
 
   doubleblink
 
-  log "Waiting 1 minute"
-  sleep 1m
+  log "Waiting 1 hour"
+  sleep 1h
   
   check_if_usb_gadget_is_mounted
 done

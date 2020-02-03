@@ -133,6 +133,19 @@ function get_archive_module () {
     esac
 }
 
+function install_website() {
+    local install_path="$1"
+    local node_version="$2" #11.15.0
+    local node_architecture="$3" #armv6l
+    log "Donwloading and installation NodeJS version $node_version for $node_architecture"
+    curl -o node-v$node_version-linux-$node_architecture.tar.gz https://nodejs.org/dist/latest-v11.x/node-v$node_version-linux-$node_architecture.tar.gz
+    tar -xzf node-v$node_version-linux-$node_architecture.tar.gz
+    sudo cp -r node-v$node_version$-linux-$node_architecture/* /usr/local/
+
+    node -v
+    npm -v
+}
+
 function install_archive_scripts () {
     local install_path="$1"
     local archive_module="$2"
@@ -373,6 +386,7 @@ archive_module="$( get_archive_module )"
 log_progress "Using archive module: $archive_module"
 
 install_archive_scripts /root/bin "$archive_module"
+install_website /root/bin "$node_version" "$node_architecture"
 /tmp/verify-and-configure-archive.sh
 
 install_rc_local /root/bin
