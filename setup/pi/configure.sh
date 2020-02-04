@@ -148,6 +148,8 @@ function install_website() {
     rm "$install_path/$archive_name.tar.gz"
     
     setup_progress "Cleaning install folder"
+    ls "$install_path"
+    ls "$install_path/$archive_name"
     sudo cp -r "$install_path/$archive_name/*" "$install_path"
     rm -r "$install_path/$archive_name"
     setup_progress "Website installed"
