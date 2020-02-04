@@ -150,7 +150,7 @@ function install_website() {
     setup_progress "Cleaning install folder"
     ls "$install_path"
     ls "$install_path/$archive_name"
-    sudo cp -r "$install_path/$archive_name/*" "$install_path"
+    rsync -a "$install_path/$archive_name/" "$install_path"
     rm -r "$install_path/$archive_name"
     setup_progress "Website installed"
 }
