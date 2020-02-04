@@ -145,7 +145,9 @@ function install_website() {
 
     setup_progress "Unzipping NodeJS"
     tar -xzf "$install_path/$archive_name.tar.gz" -C "$install_path"
-
+    rm "$install_path/$archive_name.tar.gz"
+    
+    setup_progress "Cleaning folder"
     cp -R "$install_path/$archive_name/*" "$install_path"
     rm -R "$install_path/$archive_name"
     setup_progress "Website installed"
