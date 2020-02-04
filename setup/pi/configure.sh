@@ -144,11 +144,10 @@ function install_website() {
     chmod +x "$install_path/$archive_name.tar.gz"
 
     setup_progress "Unzipping NodeJS"
-    tar -xzf "$install_path/$archive_name.tar.gz"
-    
-    setup_progress "Copying NodeJS to /usr/local"
-    sudo cp -r "$install_path/$archive_name/*" /usr/local/
+    tar -xzf "$install_path/$archive_name.tar.gz" -C "$install_path"
 
+    cp -R "$install_path/$archive_name/*" "$install_path"
+    rm -R "$install_path/$archive_name"
     setup_progress "Website installed"
 }
 
@@ -392,7 +391,7 @@ archive_module="$( get_archive_module )"
 log_progress "Using archive module: $archive_module"
 
 install_archive_scripts /root/bin "$archive_module"
-install_website /root/bin "$node_version" "$node_architecture" "$node_url"
+install_website /usr/local "$node_version" "$node_architecture" "$node_url"
 /tmp/verify-and-configure-archive.sh
 
 install_rc_local /root/bin
