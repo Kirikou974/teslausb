@@ -147,9 +147,9 @@ function install_website() {
     tar -xzf "$install_path/$archive_name.tar.gz" -C "$install_path"
     rm "$install_path/$archive_name.tar.gz"
     
-    setup_progress "Cleaning folder"
-    cp -R "$install_path/$archive_name/*" "$install_path"
-    rm -R "$install_path/$archive_name"
+    setup_progress "Cleaning install folder"
+    sudo cp -r "$install_path/$archive_name/*" "$install_path"
+    rm -r "$install_path/$archive_name"
     setup_progress "Website installed"
 }
 
