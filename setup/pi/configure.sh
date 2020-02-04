@@ -135,9 +135,9 @@ function get_archive_module () {
 
 function install_website() {
     local install_path="$1"
-    local node_version="$2" #11.15.0
-    local node_architecture="$3" #armv6l
-    local nodejs_url = "$4"  #"https://nodejs.org/dist/latest-v11.x/"
+    local node_version="$2"
+    local node_architecture="$3"
+    local nodejs_url="$4"
     local archive_name="node-v$node_version-linux-$node_architecture.tar.gz"
     setup_progress "Donwloading NodeJS version $node_version for $node_architecture"
     curlwrapper -o "$install_path/$archive_name" "$nodejs_url/$archive_name"
