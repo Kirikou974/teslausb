@@ -138,13 +138,13 @@ function install_website() {
     local node_version="$2"
     local node_architecture="$3"
     local nodejs_url="$4"
-    local archive_name="node-v$node_version-linux-$node_architecture.tar.gz"
+    local archive_name="node-v$node_version-linux-$node_architecture"
     setup_progress "Donwloading NodeJS version $node_version for $node_architecture"
-    curlwrapper -o "$install_path/$archive_name" "$nodejs_url/$archive_name"
-    chmod +x "$install_path/$archive_name"
+    curlwrapper -o "$install_path/$archive_name.tar.gz" "$nodejs_url/$archive_name.tar.gz"
+    chmod +x "$install_path/$archive_name.tar.gz"
 
     setup_progress "Unzipping NodeJS"
-    tar -xzf "$install_path/$archive_name"
+    tar -xzf "$install_path/$archive_name.tar.gz"
     
     setup_progress "Copying NodeJS to /usr/local"
     sudo cp -r "$install_path/$archive_name/*" /usr/local/
