@@ -137,15 +137,19 @@ function install_website() {
     local install_path="$1"
     local node_version="$2" #11.15.0
     local node_architecture="$3" #armv6l
-    log_progress "Donwloading and installation NodeJS version $node_version for $node_architecture"
-    curl -o node-v$node_version-linux-$node_architecture.tar.gz https://nodejs.org/dist/latest-v11.x/node-v$node_version-linux-$node_architecture.tar.gz
-    tar -xzf node-v$node_version-linux-$node_architecture.tar.gz
-    sudo cp -r node-v$node_version$-linux-$node_architecture/* /usr/local/
+    local nodejs_url = "$4"  #"https://nodejs.org/dist/latest-v11.x/"
+    local archive_name="node-v$node_version-linux-$node_architecture.tar.gz"
+    setup_progress "Donwloading NodeJS version $node_version for $node_architecture"
+    curlwrapper -o "$install_path/$archive_name" "$nodejs_url/$archive_name"
+    chmod +x "$install_path/$archive_name"
 
-    log_progress "NodeJS installed"
-    node -v
-    npm -v
-    log_progress "Done installing website"
+    setup_progress "Unzipping NodeJS"
+    tar -xzf "$install_path/$archive_name"
+    
+    setup_progress "Copying NodeJS to /usr/local"
+    sudo cp -r "$install_path/$archive_name/*" /usr/local/
+
+    setup_progress "Website installed"
 }
 
 function install_archive_scripts () {
@@ -388,7 +392,7 @@ archive_module="$( get_archive_module )"
 log_progress "Using archive module: $archive_module"
 
 install_archive_scripts /root/bin "$archive_module"
-install_website /root/bin "$node_version" "$node_architecture"
+install_website /root/bin "$node_version" "$node_architecture" "$node_url"
 /tmp/verify-and-configure-archive.sh
 
 install_rc_local /root/bin
