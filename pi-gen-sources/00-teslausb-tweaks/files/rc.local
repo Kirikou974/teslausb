@@ -138,12 +138,13 @@ then
     fi
 
     setup_progress "Starting setup."
+    setup_progress "Setup ended."
 
     # Start setup. This should take us all the way through to reboot
-    /root/bin/setup-teslausb
+    #/root/bin/setup-teslausb
 
     # reboot for good measure, also restarts the rc.local script
-    reboot
+    #reboot
 fi
 
 LOGFILE=/tmp/rc.local.log

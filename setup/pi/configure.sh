@@ -159,6 +159,7 @@ function install_git() {
 }
 
 function install_ffmpeg() {
+    setup_progress "Installing ffmpeg"
     apt-get install libav-tools
     apt-get install ffmpeg
 }
