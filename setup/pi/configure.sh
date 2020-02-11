@@ -155,13 +155,13 @@ function install_nodejs() {
 
 function install_git() {
     setup_progress "Installing git"
-    apt-get install git
+    apt-get -y --force-yes  install git
 }
 
 function install_ffmpeg() {
     setup_progress "Installing ffmpeg"
-    apt-get install libav-tools
-    apt-get install ffmpeg
+    apt-get -y --force-yes  install libav-tools
+    apt-get -y --force-yes  install ffmpeg
 }
 
 function install_teslasentryjs() {
