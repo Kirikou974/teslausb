@@ -133,7 +133,7 @@ function get_archive_module () {
     esac
 }
 
-function install_website() {
+function install_nodejs() {
     local install_path="$1"
     local node_version="$2"
     local node_architecture="$3"
@@ -148,11 +148,28 @@ function install_website() {
     rm "$install_path/$archive_name.tar.gz"
     
     setup_progress "Cleaning install folder"
-    ls "$install_path"
-    ls "$install_path/$archive_name"
     rsync -a "$install_path/$archive_name/" "$install_path"
     rm -r "$install_path/$archive_name"
     setup_progress "Website installed"
+}
+
+function install_git() {
+    setup_progress "Installing git"
+    apt-get install git
+}
+
+function install_ffmpeg() {
+    apt-get install libav-tools
+    apt-get install ffmpeg
+}
+
+function install_teslasentryjs() {
+    local install_folder="$1"
+    cd "$install_folder"
+    setup_progress "Cloning teslasentryjs"
+    git clone "https://github.com/Kirikou974/teslasentryjs.git"
+    setup_progress "Starting teslasentryjs"
+    su pi -c "node $install_folder/server.js < /dev/null &"
 }
 
 function install_archive_scripts () {
@@ -395,7 +412,10 @@ archive_module="$( get_archive_module )"
 log_progress "Using archive module: $archive_module"
 
 install_archive_scripts /root/bin "$archive_module"
-install_website /usr/local "$node_version" "$node_architecture" "$node_url"
+install_git
+install_ffmpeg
+install_nodejs /usr/local "$node_version" "$node_architecture" "$node_url"
+install_teslasentryjs /home/pi
 /tmp/verify-and-configure-archive.sh
 
 install_rc_local /root/bin

@@ -138,7 +138,7 @@ export HEADLESS_SETUP=true
 # software. This only works if the backing store partition hasn't
 # been created yet, i.e. during early setup, and requires an extra
 # reboot. Sizes can be specified as for example "500M" or "2G"
-# export INCREASE_ROOT_SIZE=500M
+export INCREASE_ROOT_SIZE=5G
 
 # Uncomment and change if you want setup scripts to be pulled
 # from a different repo than github.com/marcone/teslausb

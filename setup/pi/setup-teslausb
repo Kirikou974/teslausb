@@ -646,7 +646,7 @@ then
   /tmp/configure-ap.sh
 fi
 
-make_root_fs_readonly
+#make_root_fs_readonly
 
 upgrade_packages
 
