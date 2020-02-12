@@ -544,50 +544,50 @@ fi
 mount_and_fix_errors_in_files
 connect_usb_drives_to_host
 
-while true
-do
-  slowblink
-  set_time
+# while true
+# do
+#   slowblink
+#   set_time
 
-  if [ "${SNAPSHOTS_ENABLED:-true}" = "true" ]
-  then
-    # take a snapshot before archive_clips starts deleting files
-    /root/bin/make_snapshot.sh
-  fi
+#   if [ "${SNAPSHOTS_ENABLED:-true}" = "true" ]
+#   then
+#     # take a snapshot before archive_clips starts deleting files
+#     /root/bin/make_snapshot.sh
+#   fi
 
-  #mount and copy 
-  mount_and_fix_errors_in_files
-  ensure_cam_file_is_mounted
+#   #mount and copy 
+#   mount_and_fix_errors_in_files
+#   ensure_cam_file_is_mounted
   
-  set_system_to_rw
+#   #set_system_to_rw
   
-  log "Copying clips to tmp"
-  rsync -avP --exclude "RecentClips" "$CAM_MOUNT/TeslaCam" "/tmp"
-  log "Copied clips to tmp"
+#   log "Copying clips to tmp"
+#   #rsync -avP --exclude "RecentClips" "$CAM_MOUNT/TeslaCam" "/tmp"
+#   log "Copied clips to tmp"
   
-  unmount_cam_file
-  truncate_log
+#   unmount_cam_file
+#   truncate_log
 
-  #disconnect_usb_drives_from_host
+#   #disconnect_usb_drives_from_host
   
-  #log "Removing files from drive"
-  #rm -rf "$CAM_MOUNT/TeslaCam/SavedClips"/*
-  #rm -rf "$CAM_MOUNT/TeslaCam/SentryClips"/*
-  #log "Removed files from drive"
+#   #log "Removing files from drive"
+#   #rm -rf "$CAM_MOUNT/TeslaCam/SavedClips"/*
+#   #rm -rf "$CAM_MOUNT/TeslaCam/SentryClips"/*
+#   #log "Removed files from drive"
   
-  #trim_free_space "$CAM_MOUNT"
+#   #trim_free_space "$CAM_MOUNT"
   
-  #connect_usb_drives_to_host
+#   #connect_usb_drives_to_host
 
   
-  #sleep "${ARCHIVE_DELAY:-20}"
-  #archive_clips
+#   #sleep "${ARCHIVE_DELAY:-20}"
+#   #archive_clips
   
 
-  doubleblink
+#   doubleblink
 
-  log "Waiting 1 hour"
-  sleep 1h
+#   log "Waiting 1 hour"
+#   sleep 1h
   
-  check_if_usb_gadget_is_mounted
-done
+#   check_if_usb_gadget_is_mounted
+# done
