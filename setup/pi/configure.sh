@@ -153,27 +153,6 @@ function install_nodejs() {
     setup_progress "Website installed"
 }
 
-function install_ddclient() {
-    local ddns_login="$1"
-    local ddns_password="$2"
-    local ddns_hostname="$3"
-
-    setup_progress "Installing ddclient"
-    apt-get -y --force-yes install ddclient
-
-    setup_progress "Starting ddlclient service"
-    cat <<EOF | sudo tee /etc/ddclient.conf
-use=web
-ssl=yes
-protocol=noip
-login=$ddns_login
-password=$ddns_password
-$ddns_hostname
-EOF
-    echo 'run_daemon="true"' | sudo tee -a /etc/default/ddclient
-    sudo service ddclient restart
-}
-
 function install_git() {
     setup_progress "Installing git"
     apt-get -y --force-yes  install git
@@ -440,7 +419,6 @@ install_archive_scripts /root/bin "$archive_module"
 install_git
 install_ffmpeg
 install_nodejs /usr/local "$node_version" "$node_architecture" "$node_url"
-install_ddclient "$ddns_login" "$ddns_password" "$ddns_hostname"
 install_teslasentryjs /home/pi
 /tmp/verify-and-configure-archive.sh
 
